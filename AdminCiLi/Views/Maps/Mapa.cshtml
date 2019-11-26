@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewBag.Title = "Mapa";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<style>
+    /* Always set the map height explicitly to define the size of the div
+        * element that contains the map. */
+    #map {
+        height: 500px;
+        width: 1000px; 
+    }
+</style>
+
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Yanahuara</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Mapa</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+        <!-- Default box -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Yanahuara</h3>
+
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div id="map"></div>
+                <script>
+                    var map;
+                    function initMap() {
+                        map = new google.maps.Map(document.getElementById('map'), {
+                            center: { lat: -34.397, lng: 150.644 },
+                            zoom: 8
+                        });
+                                               
+                    }
+                </script>
+                <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_tIawRv7AMG6rIzu8BdplrfjyVsNUVyY&callback=initMap"
+                        async defer></script>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+                Contenedores
+            </div>
+            <!-- /.card-footer-->
+        </div>
+        <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
