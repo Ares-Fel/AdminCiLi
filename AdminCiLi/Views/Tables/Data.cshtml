@@ -38,11 +38,11 @@
                         <table id="example2" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
+                                    <th>ID</th>
                                     <th>Imagen</th>
                                     <th>Tipo</th>
+                                    <th>Usuario encargado</th>
                                     <th>Comentario(s)</th>
-                                    <th>Latitud</th>
-                                    <th>Longitud</th>
                                     <th>Acción</th>
                                 </tr>
                             </thead>
@@ -50,13 +50,13 @@
                                 @foreach (var info in ViewBag.InfoContenedores)
                                 {
                                 <tr>
+                                    <td>@info.Id_tacho</td>
                                     <td>@info.Imagenbase64</td>
                                     <td>@info.TipoTacho</td>
+                                    <td>@info.Email_user</td>
                                     <td>@info.Comentario</td>
-                                    <td>@info.Latitud</td>
-                                    <td>@info.Longitud</td>
                                     <td>
-                                        <button type="button" class="btn btn-block btn-success">Editar</button>
+                                        <button type="button" class="btn btn-block btn-success" data-target="#MyModal" data-toggle="modal">Editar</button>
                                     </td>
 
                                 </tr>
@@ -65,11 +65,11 @@
                             </tbody>
                             <tfoot>
                                 <tr>
+                                    <th>ID</th>
                                     <th>Imagen</th>
                                     <th>Tipo</th>
+                                    <th>Usuario encargado</th>
                                     <th>Comentario(s)</th>
-                                    <th>Latitud</th>
-                                    <th>Longitud</th>
                                     <th>Acción</th>
                                 </tr>
                             </tfoot>
@@ -84,6 +84,61 @@
         <!-- /.row -->
     </section>
     <!-- /.content -->
+</div>
+
+<div class="modal" id="MyModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Tacho</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form role="form">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Tipo</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Comentario</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Latitud</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Longitud</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputFile">File input</label>
+                            <div class="input-group">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="exampleInputFile">
+                                    <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                </div>
+                                <div class="input-group-append">
+                                    <span class="input-group-text" id="">Upload</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- DataTables -->

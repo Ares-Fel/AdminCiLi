@@ -46,6 +46,7 @@ namespace AdminCiLi.Controllers
                 DatosContenedorList.Latitud = infoTacho.Object.Latitud;
                 DatosContenedorList.Longitud = infoTacho.Object.Longitud;
                 DatosContenedorList.Id_user = infoTacho.Object.Id_user;
+                DatosContenedorList.Id_tacho = infoTacho.Object.Id_tacho;
                 DatosContenedorList.LugarDistrito = infoTacho.Object.LugarDistrito;
 
                 MatrizContenedorList.Add(DatosContenedorList);
