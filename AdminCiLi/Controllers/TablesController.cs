@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using AdminCiLi.Models;
 
 using Firebase.Database;
+using Firebase.Database.Query;
 
 namespace AdminCiLi.Controllers
 {
@@ -34,7 +35,6 @@ namespace AdminCiLi.Controllers
 
             //Convert JSON data to original datatype
 
-            var t = 1;
             foreach (var infoTacho in dbTachos)
             {
                 var DatosContenedorList = new ContenedoresData();
@@ -56,6 +56,19 @@ namespace AdminCiLi.Controllers
             ViewBag.InfoContenedores = MatrizContenedorList;
             return View();
 
+        }
+        [HttpPost]
+        public async Task<ActionResult> Eliminar(String btnEliminar)
+        {
+            var firebase = new FirebaseClient("https://rotcleanlast.firebaseio.com/");
+            System.Diagnostics.Debug.WriteLine(btnEliminar);
+            // delete given child node
+            await firebase
+              .Child("Tachos")
+              .Child(btnEliminar)
+              .DeleteAsync();
+
+            return RedirectToAction("Data");
         }
     }
 }

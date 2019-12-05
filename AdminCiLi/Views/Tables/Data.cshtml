@@ -38,39 +38,43 @@
                         <table id="example2" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>Nro</th>
                                     <th>Imagen</th>
                                     <th>Tipo</th>
                                     <th>Usuario encargado</th>
                                     <th>Comentario(s)</th>
-                                    <th>Acción</th>
+                                    <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @{ int t = 1;}
                                 @foreach (var info in ViewBag.InfoContenedores)
                                 {
-                                <tr>
-                                    <td>@info.Id_tacho</td>
-                                    <td>@info.Imagenbase64</td>
-                                    <td>@info.TipoTacho</td>
-                                    <td>@info.Email_user</td>
-                                    <td>@info.Comentario</td>
-                                    <td>
-                                        <button type="button" class="btn btn-block btn-success" data-target="#MyModal" data-toggle="modal">Editar</button>
-                                    </td>
-
-                                </tr>
+                                    <tr id="@info.Id_tacho">
+                                        <td><span>@t</span></td>
+                                        <td><span id="imagen_@info.Id_tacho">@info.Imagenbase64</span></td>
+                                        <td><span id="tipo_@info.Id_tacho">@info.TipoTacho</span></td>
+                                        <td><span id="email_@info.Id_tacho">@info.Email_user</span></td>
+                                        <td><span id="comentario_@info.Id_tacho">@info.Comentario</span></td>
+                                        <td>
+                                            <form action="/Tables/Eliminar" method="POST">
+                                                <button id="btnEditar" type="button" class="btn btn-block btn-success" data-target="#MyModal" data-toggle="modal" value="@info.Id_tacho"><span><i class="nav-icon fas fa-edit"></i></span></button>
+                                                <button id="btnEliminar" type="submit" class="btn btn-block btn-danger" value="@info.Id_tacho" name="btnEliminar"><span><i class="nav-icon fas fa-trash"></i></span></button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    t++;
                                 }
 
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>Nro</th>
                                     <th>Imagen</th>
                                     <th>Tipo</th>
                                     <th>Usuario encargado</th>
                                     <th>Comentario(s)</th>
-                                    <th>Acción</th>
+                                    <th>Acciones</th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -86,78 +90,94 @@
     <!-- /.content -->
 </div>
 
+<!-- Modal para editar -->
 <div class="modal" id="MyModal" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="card card-primary">
                 <div class="card-header">
-                    <h3 class="card-title">Tacho</h3>
+                    <h3 class="card-title">Editar</h3>
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form role="form">
+                <form role="form" action="/Tables/Editar" method="post">
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Tipo</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                            <label>Tipo</label>
+                            <select class="custom-select" id="tipo-select">
+                                <option value="Tacho">Tacho</option>
+                                <option value="Contenedor">Contenedor</option>
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputPassword1">Comentario</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                            <label for="inputComentario">Comentario</label>
+                            <input type="text" class="form-control" id="inputComentario" placeholder="Comentario">
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Latitud</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Longitud</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputFile">File input</label>
-                            <div class="input-group">
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="exampleInputFile">
-                                    <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                                </div>
-                                <div class="input-group-append">
-                                    <span class="input-group-text" id="">Upload</span>
-                                </div>
-                            </div>
+                            <label for="inputEmail">Email</label>
+                            <input type="email" class="form-control" id="inputEmail" placeholder="Email">
                         </div>
                         <div class="form-check">
                             <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                            <label class="form-check-label" for="exampleCheck1">Atendido</label>
                         </div>
                     </div>
                     <!-- /.card-body -->
 
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-block btn-success">Guardar Cambios</button>
+                        <button type="button" class="btn btn-block btn-secondary">Cancelar</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+<!-- /.Fin Modal Editar -->
 
-<!-- DataTables -->
-<script src="~/Content/plugins/datatables/jquery.dataTables.js"></script>
-<script src="~/Content/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+<!-- Modal eliminar -->
+<div class="modal fade" id="modalEliminar" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Eliminar</h3>
+                </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="inputComentario">Se ha eliminado el contenedor</label>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        <span class="glyphicon glyphicon-remove"></span>
+                        <span class="hidden-xs">Aceptar</span>
+                    </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.Fin modal eliminar -->
 
 <!-- page script -->
 <script>
-  $(function () {
-    $("#example1").DataTable();
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
+
+    $(document).ready(function () {
+        $(document).on('click', '#btnEditar', function () {
+            var id_tacho = $(this).attr('value');
+            var tipo = $('#tipo_' + id_tacho).text();
+            var comentario = $('#comentario_' + id_tacho).text();
+            var email = $('#email_' + id_tacho).text();
+            //var longitud = $('#longitud_' + id_tacho).text();
+            //var latitud = $('#latitud_' + id_tacho).text();
+
+            $('#tipo-select').val(tipo);
+            $('#inputComentario').val(comentario);
+            $('#inputEmail').val(email);
+            /*$('#inputLatitud').val(comentario);
+            $('#inputLongitud').val(comentario);*/
+        });
     });
-  });
 </script>
 
 <!-- /.content-wrapper -->

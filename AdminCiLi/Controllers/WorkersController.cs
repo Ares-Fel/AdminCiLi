@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using AdminCiLi.Models;
 using Firebase.Database;
+using Firebase.Database.Query;
 
 namespace AdminCiLi.Controllers
 {
@@ -44,6 +45,52 @@ namespace AdminCiLi.Controllers
             //Pass data to the view
             ViewBag.InfoUsuarios = MatrizUsuariosList;
             return View();
+        }
+
+        public async Task<ActionResult> Perfil(String id_usuario)
+        {
+            //Save non identifying data to Firebase
+            var firebaseClient = new FirebaseClient("https://rotcleanlast.firebaseio.com/");
+
+            var dbUsuarios = await firebaseClient.Child("Usuarios").Child("-Lv6inhqCz7pSfo46fRl").OnceSingleAsync<Usuarios>();
+
+            var usuario = new Usuarios();
+
+            //Convert JSON data to original datatype
+
+            usuario.Apellidos = dbUsuarios.Apellidos;
+            usuario.Nombre = dbUsuarios.Nombre;
+            usuario.Email = dbUsuarios.Email;
+            usuario.Direccion = dbUsuarios.Direccion;
+            usuario.Telefono = dbUsuarios.Telefono;
+            usuario.Tipo = dbUsuarios.Tipo;
+
+            //Pass data to the view
+            ViewBag.InfoUsuario = usuario;
+            ViewBag.Apellido = dbUsuarios.Apellidos;
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Nuevo(String Apellidos, String Nombre, String Email, String Direccion, String Telefono)
+        {            
+            Usuarios user = new Usuarios();
+
+            user.Apellidos = Apellidos;
+            user.Nombre = Nombre;
+            user.Email = Email;
+            user.Direccion = Direccion;
+            user.Telefono = Telefono;
+            user.Tipo = "Colaborador";
+
+            //Save non identifying data to Firebase
+            var firebase = new FirebaseClient("https://rotcleanlast.firebaseio.com/");
+
+            await firebase
+            .Child("Usuarios")
+            .PostAsync(user);
+
+            return RedirectToAction("Trabajadores");
         }
     }
 }

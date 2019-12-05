@@ -20,6 +20,10 @@
                     </ol>
                 </div>
             </div>
+            <div class="col-sm-6">
+                <button type="button" class="btn btn-success" data-target="#MyModalColaborador" data-toggle="modal"><i class="nav-icon fas fa-plus"></i> Añadir</button>
+            </div>
+
         </div><!-- /.container-fluid -->
     </section>
 
@@ -30,7 +34,7 @@
         <div class="card card-solid">
             <div class="card-body pb-0">
                 <div class="row d-flex align-items-stretch">
-                    
+
 
                     @foreach (var info in ViewBag.InfoUsuarios)
                     {
@@ -59,7 +63,7 @@
                                         <a href="#" class="btn btn-sm bg-teal">
                                             <i class="fas fa-comments"></i>
                                         </a>
-                                        <a href="#" class="btn btn-sm btn-primary">
+                                        <a href="/Workers/Perfil" class="btn btn-sm btn-primary">
                                             <i class="fas fa-user"></i> Ver Perfil
                                         </a>
                                     </div>
@@ -95,3 +99,49 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+
+<!-- Modal para crear colaborador -->
+<div class="modal" id="MyModalColaborador" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Editar</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form role="form" action="/Workers/Nuevo" method="post">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="inputApellidos">Apellidos</label>
+                            <input type="text" class="form-control" id="inputApellidos" name="Apellidos" placeholder="Apellidos">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputNombre">Nombre</label>
+                            <input type="text" class="form-control" id="inputNombre" name="Nombre" placeholder="Nombre">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail">Email</label>
+                            <input type="email" class="form-control" id="inputEmail" name="Email" placeholder="Email">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputDireccionl">Dirección</label>
+                            <input type="text" class="form-control" id="inputDireccion" name="Direccion" placeholder="Dirección">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputTelefono">Télefono</label>
+                            <input type="text" class="form-control" id="inputTelefono" name="Telefono" placeholder="Télefono">
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-block btn-success">Crear Colaborador</button>
+                        <button type="button" class="btn btn-block btn-secondary" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.Fin Modal crear colaborador -->
