@@ -39,7 +39,10 @@ namespace AdminCiLi.Controllers
                 DatosUsuarioList.Email = infoUsuario.Object.Email;
                 DatosUsuarioList.Tipo = infoUsuario.Object.Tipo;
 
-                MatrizUsuariosList.Add(DatosUsuarioList);
+                if (DatosUsuarioList.Tipo == "colaborador" || DatosUsuarioList.Tipo == "Colaborador")
+                {
+                    MatrizUsuariosList.Add(DatosUsuarioList);
+                }                
             }
 
             //Pass data to the view
@@ -52,7 +55,7 @@ namespace AdminCiLi.Controllers
             //Save non identifying data to Firebase
             var firebaseClient = new FirebaseClient("https://rotcleanlast.firebaseio.com/");
 
-            var dbUsuarios = await firebaseClient.Child("Usuarios").Child("-Lv6inhqCz7pSfo46fRl").OnceSingleAsync<Usuarios>();
+            var dbUsuarios = await firebaseClient.Child("Usuarios").Child("2gFSHTMzJ4T6olEsUP2HpGoXq3t1").OnceSingleAsync<Usuarios>();
 
             var usuario = new Usuarios();
 
@@ -64,10 +67,9 @@ namespace AdminCiLi.Controllers
             usuario.Direccion = dbUsuarios.Direccion;
             usuario.Telefono = dbUsuarios.Telefono;
             usuario.Tipo = dbUsuarios.Tipo;
-
+            
             //Pass data to the view
             ViewBag.InfoUsuario = usuario;
-            ViewBag.Apellido = dbUsuarios.Apellidos;
             return View();
         }
 

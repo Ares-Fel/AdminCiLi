@@ -70,5 +70,36 @@ namespace AdminCiLi.Controllers
 
             return RedirectToAction("Data");
         }
+
+        public async Task<JsonResult> DataJson()
+        {
+            //Save non identifying data to Firebase
+            var firebaseClient = new FirebaseClient("https://rotcleanlast.firebaseio.com/");
+
+            var dbTachos = await firebaseClient.Child("Tachos").OnceAsync<ContenedoresData>();
+
+            var MatrizContenedorList = new List<ContenedoresData>();
+
+            //Convert JSON data to original datatype
+
+            foreach (var infoTacho in dbTachos)
+            {
+                var DatosContenedorList = new ContenedoresData();
+
+                DatosContenedorList.Imagenbase64 = "Imagen Contenedor";
+                DatosContenedorList.TipoTacho = infoTacho.Object.TipoTacho;
+                DatosContenedorList.Email_user = infoTacho.Object.Email_user;
+                DatosContenedorList.Comentario = infoTacho.Object.Comentario;
+                DatosContenedorList.Latitud = infoTacho.Object.Latitud;
+                DatosContenedorList.Longitud = infoTacho.Object.Longitud;
+                DatosContenedorList.Id_user = infoTacho.Object.Id_user;
+                DatosContenedorList.Id_tacho = infoTacho.Object.Id_tacho;
+                DatosContenedorList.LugarDistrito = infoTacho.Object.LugarDistrito;
+
+                MatrizContenedorList.Add(DatosContenedorList);
+            }
+            return Json(MatrizContenedorList, JsonRequestBehavior.AllowGet);
+
+        }
     }
 }

@@ -32,10 +32,16 @@ namespace AdminCiLi.Controllers
             {
                 var DatosContenedorList = new ContenedoresData();
 
+                DatosContenedorList.Imagenbase64 = "Imagen Contenedor";
                 DatosContenedorList.TipoTacho = infoTacho.Object.TipoTacho;
+                DatosContenedorList.Email_user = infoTacho.Object.Email_user;
+                DatosContenedorList.Comentario = infoTacho.Object.Comentario;
                 DatosContenedorList.Latitud = infoTacho.Object.Latitud;
                 DatosContenedorList.Longitud = infoTacho.Object.Longitud;
-                
+                DatosContenedorList.Id_user = infoTacho.Object.Id_user;
+                DatosContenedorList.Id_tacho = infoTacho.Object.Id_tacho;
+                DatosContenedorList.LugarDistrito = infoTacho.Object.LugarDistrito;
+
                 MatrizContenedorList.Add(DatosContenedorList);
             }
 

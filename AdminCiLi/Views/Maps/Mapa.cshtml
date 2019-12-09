@@ -54,15 +54,51 @@
                 <div id="map"></div>
                 <script>
                     var map;
+                    var marker;
+                    var icon_contenedor = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+                    var icon_tacho;
+                    var info;
                     function initMap() {
+
+
                         map = new google.maps.Map(document.getElementById('map'), {
-                            center: { lat: -34.397, lng: 150.644 },
-                            zoom: 8
+                            center: { lat: -16.42774397355424, lng: -71.5203107893467 },
+                            zoom: 16
                         });
-                                               
+                        console.log("Mapa iniciado");
+
+                        $.ajax({
+                          type: "POST",
+                          contentType: "application/json; charset=utf-8",
+                          url: "/Tables/DataJson",
+
+                          dataType: "json",
+                            success: function (resultado) {
+                                $.each(resultado, function (index, value) {
+                                  marker = new google.maps.Marker({
+                                      map: map,
+                                      animation: google.maps.Animation.DROP,
+                                      position: { lat: Number(value.Latitud), lng: Number(value.Longitud) },
+                                      icon: icon_contenedor
+                                  });
+                                  /*(function (marker, index) {
+                                      google.maps.event.addListener(marker, 'click', function () {
+
+                                          infowindow = new google.maps.InfoWindow({ maxWidth: 250 });
+                                          infowindow.setContent(value.TipoTacho);
+                                          infowindow.open(map, marker);
+                                      });
+                                  })(marker, index);*/
+                              });
+                          },
+                          error: function (result) {
+                              console.log(result.responseText+"++");
+                              alert("Error");
+                          }
+                      });
                     }
                 </script>
-                <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_tIawRv7AMG6rIzu8BdplrfjyVsNUVyY&callback=initMap"
+                <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqjV9tsWHVeOJMr_wPdSx80iP1rnai-Rk&callback=initMap"
                         async defer></script>
             </div>
             <!-- /.card-body -->
